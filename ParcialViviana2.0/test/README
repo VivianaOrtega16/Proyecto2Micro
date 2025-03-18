@@ -1,0 +1,76 @@
+
+This directory is intended for PlatformIO Test Runner and project tests.
+
+Unit Testing is a software testing method by which individual units of
+source code, sets of one or more MCU program modules together with associated
+control data, usage procedures, and operating procedures, are tested to
+determine whether they are fit for use. Unit testing finds problems early
+in the development cycle.
+
+More information about PlatformIO Unit Testing:
+- https://docs.platformio.org/en/latest/advanced/unit-testing/index.html
+# Proyecto de Control de LEDs con Switches
+
+## Descripción
+Este proyecto permite controlar 4 LEDs con 3 interruptores físicos en un Arduino Mega 2560.
+Cada switch tiene una función específica y el estado de los LEDs se muestra en el Monitor Serial.
+
+## Funcionamiento especifico
+En este proyecto he añadido mi configuracion especifica donde el switch 1 enciende el eled1, el switch 2 enciende el led 2,
+y el switch 3 hace que parpadeen los leds, es decir que se prendan y se apaguen repetidas veces.
+
+## Materiales
+- 1 x Arduino Mega 2560
+- 4 x LEDs
+- 3 x Interruptores (Switches)
+- 4 x Resistencias de 220Ω para los LEDs
+- 3 x Resistencias de 10KΩ para los switches
+- Cables y protoboard
+
+## Esquema de Conexión
+| Componente | Pin Arduino |
+|------------|-------------|
+| Switch 1   | 4           |
+| Switch 2   | 2           |
+| Switch 3   | 3           |
+| LED 1      | 8           |
+| LED 2      | 9           |
+| LED 3      | 10          |
+| LED 4      | 11          |
+
+## Instalación y Configuración
+1. Conectar los componentes.
+2. Cargar el código en la placa Arduino Mega 2560.
+3. Abrir el Monitor Serial a 9600 baudios.
+
+## Código Fuente
+```cpp
+void setup() {
+  Serial.begin(9600);
+  pinMode(4, INPUT);
+  pinMode(2, INPUT);
+  pinMode(3, INPUT);
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+}
+
+void loop() {
+  int state1 = digitalRead(4);
+  int state2 = digitalRead(2);
+  int state3 = digitalRead(3);
+
+  digitalWrite(8, state1);
+  digitalWrite(9, state2);
+
+  if (state3) {
+    for (int i = 8; i <= 11; i++) {
+      digitalWrite(i, HIGH);
+      delay(500);
+      digitalWrite(i, LOW);
+      delay(500);
+    }
+  }
+  delay(2000);
+}
